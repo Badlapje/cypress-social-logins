@@ -1,9 +1,9 @@
 <p align="center"><h1 align="center">
-  cypress-social-logins
+  cypress-sso-login
 </h1>
 
 <p align="center">
-  cypress authentication flows using social network providers
+This plugin is a fork from the [package by Lirantal](https://github.com/badlapje/cypress-social-logins) made because that one doesn't seem to be supported anymore & to add the option to sign in to SSO flows that require a redirect page (such as Azure AD B2C).
 </p>
 
 <p align="center">
@@ -82,6 +82,7 @@ Options passed to the task include:
 | args                        | string array which allows providing further arguments to puppeteer                                                                                                                                                                                                                                                                                                    | `['--no-sandbox', '--disable-setuid-sandbox']`                                                                                    |
 | headless                    | Whether to run puppeteer in headless mode or not                                                                                                                                                                                                                                                                                                                      | true                                                                                                                              |
 | logs                        | Whether to log interaction with the loginUrl website & cookie data                                                                                                                                                                                                                                                                                                    | false                                                                                                                             |
+| redirectUrl                 | (Part of a) url to which the SSO flow redirects in order to show the login screen.  The login flow will wait for this to be loaded before attempting to type the pass & username.                                                                                                                                                                                     | login.microsoft.com                                                                                                                             |
 | loginSelector               | A selector on the page that defines the specific social network to use and can be clicked, such as a button or a link                                                                                                                                                                                                                                                 | `'a[href="/auth/auth0/google-oauth2"]'`                                                                                           |
 | postLoginSelector           | A selector on the post-login page that can be asserted upon to confirm a successful login                                                                                                                                                                                                                                                                             | `'.account-panel'`                                                                                                                |
 | preLoginSelector            | a selector to find and click on before clicking on the login button (useful for accepting cookies)                                                                                                                                                                                                                                                                    | `'.ind-cbar-right button'`                                                                                                        |
@@ -183,29 +184,32 @@ describe('Login', () => {
 ## Defining custom login
 
 1 Alternative
-When you need to use social logins which aren't supported by this plugin you can make use of the `baseLoginConnect()` function that is exported as part of the plugin like so:
+When you need to use social logins which aren't supported by this plugin (eg. Azure AD) you can make use of the `baseLoginConnect()` function that is exported as part of the plugin like so:
 
 ```js
+// in cypress.config.js
 const {baseLoginConnect} = require('cypress-social-logins').plugins
+```
 
-module.exports = (on, config) => {
+Then define the task in your cypress config, customizing as necessary.  See the example below:
+
+```js
+// in cypress.config.js
+setupNodeEvents(on, config) {
   on('task', {
-    customLogin(options) {
+    customLogin(loginOptions) {
       async function typeUsername({page, options} = {}) {
-        await page.waitForSelector('input[id="username"]')
-        await page.type('input[id="username"]', options.username)
+        await page.type(options.usernameField, options.username)
       }
 
       async function typePassword({page, options} = {}) {
-        await page.waitForSelector('input[id="password"]')
-        await page.type('input[id="password"]', options.password)
-        await page.click('button[id="_submit"]')
+        await page.type(options.passwordField,options.password)
+        await page.click(options.passwordSubmitBtn)
       }
 
-      return baseLoginConnect(typeUsername, typePassword, null, options)
+      return baseLoginConnect(typeUsername, typePassword, null, null, null, loginOptions)
     }
-  })
-}
+  });
 ```
 
 2 Alternative

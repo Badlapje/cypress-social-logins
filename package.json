@@ -1,7 +1,7 @@
 {
-  "name": "cypress-social-logins",
-  "version": "0.0.0-development",
-  "description": "cypress authentication flows using social network providers",
+  "name": "cypress-sso-login",
+  "version": "1.0.0",
+  "description": "Cypress authentication flows using social network providers and azure AD SSO.  This is a fork from the package by Lirantal (https://github.com/badlapje/cypress-social-logins), which adds the option to sign in to flows that require a redirect-page - such as Azure AD B2C.",
   "main": "src/index.js",
   "engines": {
     "node": ">=8.0.0"
@@ -17,9 +17,9 @@
     "semantic-release": "semantic-release"
   },
   "author": {
-    "name": "Liran Tal",
-    "email": "liran.tal@gmail.com",
-    "url": "https://github.com/lirantal"
+    "name": "Koen Cornelis",
+    "email": "koen@cornelis.it",
+    "url": "https://github.com/badlapje"
   },
   "license": "Apache-2.0",
   "keywords": [
@@ -29,13 +29,13 @@
     "social",
     "logins"
   ],
-  "homepage": "https://github.com/lirantal/cypress-social-logins",
+  "homepage": "https://github.com/badlapje/cypress-social-logins",
   "bugs": {
-    "url": "https://github.com/lirantal/cypress-social-logins/issues"
+    "url": "https://github.com/badlapje/cypress-social-logins/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lirantal/cypress-social-logins.git"
+    "url": "https://github.com/badlapje/cypress-social-logins.git"
   },
   "dependencies": {
     "otplib": "^12.0.1",

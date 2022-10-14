@@ -10,6 +10,7 @@ const fs = require('fs')
  * @param {options.username} string username
  * @param {options.password} string password
  * @param {options.loginUrl} string password
+ * @param {options.redirectUrl} string (part of an) url to which the SSO flow redirects in order to log in
  * @param {options.loginUrlCredentials} Object Basic Authentication credentials for the `loginUrl`
  * @param {options.preVisitLoginUrlSetCookies} array[{name: string, value: string, domain: string}] cookies to set before visiting `loginUrl`
  * @param {options.args} array[string] string array which allows providing further arguments to puppeteer
@@ -70,6 +71,20 @@ async function login({page, options} = {}) {
     await frame.click(options.preLoginSelector)
     if (options.preLoginSelectorIframeDelay !== false) {
       await delay(options.preLoginSelectorIframeDelay)
+    }
+  }
+
+  if (options.redirectUrl) {
+    if (options.log) {
+      console.log('waiting for redirect')
+    }
+
+    page.waitForRequest(request => {
+      return  request.url().includes(options.redirectUrl)
+    })
+
+    if (options.log) {
+      console.log('redirect ended')
     }
   }
 

@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-This plugin is a fork from the [package by Lirantal](https://github.com/badlapje/cypress-social-logins) made because that one doesn't seem to be supported anymore & to add the option to sign in to SSO flows that require a redirect page (such as Azure AD B2C).
+This plugin is a fork from the <a href="https://github.com/lirantal/cypress-social-logins" target="_blank" rel="external noopener noreferrer">package by Lirantal</a> made because that one doesn't seem to be supported anymore & to add the option to sign in to SSO flows that require a redirect page (such as Azure AD B2C).
 </p>
 
 <p align="center">

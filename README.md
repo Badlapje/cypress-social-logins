@@ -35,6 +35,7 @@ Supported identity providers:
 
 | Provider  | Plugin name          |
 | --------- | -------------------- |
+| Azure AD  | CustomLogin          |
 | Google    | GoogleSocialLogin    |
 | GitHub    | GitHubSocialLogin    |
 | Microsoft | MicrosoftSocialLogin |
@@ -109,7 +110,7 @@ Options passed to the task include:
 Install the plugin as a dependency
 
 ```bash
-npm install --save-dev cypress-social-logins
+npm install --save-dev cypress-sso-login
 ```
 
 ## Import the plugin
